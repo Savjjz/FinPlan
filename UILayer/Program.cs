@@ -21,6 +21,7 @@ namespace UILayer
             Application.SetCompatibleTextRenderingDefault(false);
             //try
             //{
+            MessageBox.Show("Удали это");
             Application.Run(new Loading());
             //}
             //catch(Exception e)
