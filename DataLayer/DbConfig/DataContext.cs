@@ -42,7 +42,7 @@ namespace DataLayer.DbConfig
                         Key = "A2",
                         Name = "Фонд поставщиков материалов",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 20.0,
+                        PercentFromBanckroll = 15.0,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -66,7 +66,7 @@ namespace DataLayer.DbConfig
                         Key = "B1",
                         Name = "Фонд дивидендов",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 3.30,
+                        PercentFromBanckroll = 2.80,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -82,7 +82,7 @@ namespace DataLayer.DbConfig
                         Key = "B3",
                         Name = "Фонд аренды",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 9.00,
+                        PercentFromBanckroll = 8.50,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -90,7 +90,7 @@ namespace DataLayer.DbConfig
                         Key = "B4",
                         Name = "Фонд оплаты труда",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 45.00,
+                        PercentFromBanckroll = 48.50,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -98,7 +98,7 @@ namespace DataLayer.DbConfig
                         Key = "B5",
                         Name = "Фонд резервов",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 5.00,
+                        PercentFromBanckroll = 3.50,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -114,7 +114,7 @@ namespace DataLayer.DbConfig
                         Key = "B7",
                         Name = "Фонд просроченной задолжности",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 4.50,
+                        PercentFromBanckroll = 3.50,
                         TotalSum = 0.0
                     },
                     new FundModel {
@@ -122,7 +122,7 @@ namespace DataLayer.DbConfig
                         Key = "B8",
                         Name = "Фонд средства производства и инструмент",
                         MonthForecast = 0.0,
-                        PercentFromBanckroll = 3.30,
+                        PercentFromBanckroll = 0.28,
                         TotalSum = 0.0
                     },
                     new FundModel {

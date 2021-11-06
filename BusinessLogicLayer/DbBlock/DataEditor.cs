@@ -158,5 +158,17 @@ namespace BusinessLogicLayer.DbBlock
             DbContext.SaveChanges();
         }
 
+        /// <summary>
+        /// Редактировать проценты от распределения в фонды
+        /// </summary>
+        /// <param name="funds"></param>
+        public void EdditFundsPercentsData(Fund[] funds)
+        {
+            foreach (var fund in funds)
+            {
+                DbContext.Funds.FirstOrDefault(p => p.Key == fund.Key).PercentFromBanckroll = fund.PredictablePercent;
+            }
+            DbContext.SaveChanges();
+        }
     }
 }
