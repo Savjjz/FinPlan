@@ -22,6 +22,7 @@ namespace DataLayer.Entities
         /// </summary>
         public FundModel Fund { get; set; }
         public string FundId { get; set; }
+        public double PercentFromBankroll { get; set; }
         /// <summary>
         /// Связь 1 to many с Expenditure
         /// </summary>

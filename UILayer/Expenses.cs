@@ -18,7 +18,7 @@ namespace Supervisor
 
         private double[] fundBalances = new double[15];
 
-        public Expenses()
+        public Expenses(string fundKey)
         {
             DataProvider provider = new DataProvider();
             var fundConditions = provider.GetFundConditionsByWeek(provider.FindLastWeekInDb().Number);
@@ -31,6 +31,7 @@ namespace Supervisor
 
             fromDB.CopyTo(fundBalances, 0x0000);
             InitializeComponent();
+            fundPicker.SelectedItem = fundKey;
         }
 
         private void Submit_Click(object sender, EventArgs e)
@@ -42,7 +43,6 @@ namespace Supervisor
                 dataAdder.AddExpenditure(fundPicker.Text, expenditure);
                 this.Close();
                 MessageBox.Show("Трата успешно добавлена");
-                ExpenceCreated();
             }
             catch
             {

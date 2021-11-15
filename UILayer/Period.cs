@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using BusinessLogicLayer.DbBlock;
 using BusinessLogicLayer.ExcelBlock;
+using UILayer;
 
 namespace Supervisor
 {
@@ -154,8 +155,7 @@ namespace Supervisor
             }
             else if (isLastWeek)
             {
-                Expenses expenses = new Expenses();
-                expenses.ExpenceCreated += FormUpdate;
+                AllExpenses expenses = new AllExpenses("A1", PeriodNumber);
                 expenses.Show();
             }
         }

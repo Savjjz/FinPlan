@@ -238,6 +238,8 @@ namespace BusinessLogicLayer.DbBlock
             return funds;
         }
 
+
+
         /// <summary>
         /// Получить распределение по фондам за последнюю неделю
         /// </summary>

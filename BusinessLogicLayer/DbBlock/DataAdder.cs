@@ -186,6 +186,7 @@ namespace BusinessLogicLayer.DbBlock
             {
                 MoneySumBeforeFinPlan = fund.TotalSum,
                 MoneySumAfterFinPlan = fund.TotalSum,
+                PercentFromBankroll = fund.PercentFromBanckroll,
                 Fund = fund,
                 Week = week
             };

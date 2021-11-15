@@ -351,7 +351,8 @@ namespace BusinessLogicLayer.ExcelBlock
 
                 currentCell = "C" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
-                range.Value = fund.PercentFromBanckroll;
+                range.Value = Provider.FindFundConditionByWeek(CurrentWeek.Number, fund.Key).PercentFromBankroll;
+                //range.Value = fund.PercentFromBanckroll;
 
                 currentCell = "G" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
@@ -391,7 +392,8 @@ namespace BusinessLogicLayer.ExcelBlock
 
                 currentCell = "C" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
-                range.Value = fund.PercentFromBanckroll;
+                range.Value = Provider.FindFundConditionByWeek(CurrentWeek.Number, fund.Key).PercentFromBankroll;
+                //range.Value = fund.PercentFromBanckroll;
 
                 currentCell = "G" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
