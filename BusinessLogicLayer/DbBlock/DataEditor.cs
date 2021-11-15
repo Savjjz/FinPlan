@@ -60,9 +60,9 @@ namespace BusinessLogicLayer.DbBlock
                     if (funds[counter].Key == fundGroupA.Key)
                     {
                         var revenue = week.Bankroll.Revenues.FirstOrDefault(p => p.FundId == funds[counter].Id);
-                        revenue.SumFromGoods = fundGroupA.Revenue.MoneyFromGoods;
-                        revenue.SumFromService = fundGroupA.Revenue.MoneyFromService;
-                        revenue.TotalSum = fundGroupA.Revenue.TotalMoney;
+                        revenue.SumFromGoods = Math.Round(fundGroupA.Revenue.MoneyFromGoods, 2);
+                        revenue.SumFromService = Math.Round(fundGroupA.Revenue.MoneyFromService, 2);
+                        revenue.TotalSum = Math.Round(fundGroupA.Revenue.TotalMoney, 2);
                         EditFundConditionData(funds[counter], revenue);
                     }
                 }
@@ -71,9 +71,9 @@ namespace BusinessLogicLayer.DbBlock
                     if (funds[counter].Key == fundGroupB.Key)
                     {
                         var revenue = week.Bankroll.Revenues.FirstOrDefault(p => p.FundId == funds[counter].Id);
-                        revenue.SumFromGoods = fundGroupB.Revenue.MoneyFromGoods;
-                        revenue.SumFromService = fundGroupB.Revenue.MoneyFromService;
-                        revenue.TotalSum = fundGroupB.Revenue.TotalMoney;
+                        revenue.SumFromGoods = Math.Round(fundGroupB.Revenue.MoneyFromGoods, 2);
+                        revenue.SumFromService = Math.Round(fundGroupB.Revenue.MoneyFromService, 2);
+                        revenue.TotalSum = Math.Round(fundGroupB.Revenue.TotalMoney, 2);
                         EditFundConditionData(funds[counter], revenue);
                     }
                 }
@@ -82,9 +82,9 @@ namespace BusinessLogicLayer.DbBlock
                     if (funds[counter].Key == fundGroupC.Key)
                     {
                         var revenue = week.Bankroll.Revenues.FirstOrDefault(p => p.FundId == funds[counter].Id);
-                        revenue.SumFromGoods = fundGroupC.Revenue.MoneyFromGoods;
-                        revenue.SumFromService = fundGroupC.Revenue.MoneyFromService;
-                        revenue.TotalSum = fundGroupC.Revenue.TotalMoney;
+                        revenue.SumFromGoods = Math.Round(fundGroupC.Revenue.MoneyFromGoods, 2);
+                        revenue.SumFromService = Math.Round(fundGroupC.Revenue.MoneyFromService, 2);
+                        revenue.TotalSum = Math.Round(fundGroupC.Revenue.TotalMoney, 2);
                         EditFundConditionData(funds[counter], revenue);
                     }
                 }

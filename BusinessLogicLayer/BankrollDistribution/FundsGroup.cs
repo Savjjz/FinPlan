@@ -7,9 +7,9 @@ namespace BusinessLogicLayer.BankrollDistribution
 {
     public class FundsGroup
     {
-        public Fund[] FundsGroupA { get; private set; }
-        public Fund[] FundsGroupB { get; private set; }
-        public Fund[] FundsGroupC { get; private set; }
+        public Fund[] FundsGroupA { get; private set; } = new Fund[4];
+        public Fund[] FundsGroupB { get; private set; } = new Fund[8];
+        public Fund[] FundsGroupC { get; private set; } = new Fund[3];
 
         public FundsGroup()
         {

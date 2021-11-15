@@ -71,6 +71,16 @@ namespace ConsoleInterface
                 Bankroll bankroll = new Bankroll(3984657.08, 3053397.19, 931259.89);
                 dataEditor.EditBankrollData(bankroll);
             }
+            else if (i == 7)
+            {
+                DataProvider provider = new DataProvider();
+                var exp = provider.GetExpenditureArrayByWeekAndFund(2, "A1");
+                foreach (var e in exp)
+                {
+                    Console.WriteLine(e.Name);
+                    Console.WriteLine(e.MoneySum);
+                }
+            }
 
             Console.WriteLine("Success");
             Console.ReadLine();

@@ -85,6 +85,17 @@ namespace BusinessLogicLayer.DbBlock
             return expendituresSum;
         }
 
+        public ExpenditureModel[] GetExpenditureArrayByWeekAndFund(int weekNumber, string fundKey)
+        {
+            var currentWeek = DbContext.Weeks.FirstOrDefault(p => p.Number == weekNumber);
+            var currentFund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var currentFundCondition = DbContext.FundConditions.Include(p => p.Expenditures)
+                .Where(p => p.FundId == currentFund.Id)
+                .ToArray()
+                .FirstOrDefault(p => p.WeekId == currentWeek.Id);
+            return currentFundCondition.Expenditures.ToArray();
+        }
+
         public ExpenditureModel FindExpenditureByWeekAndFundKey(int weekNumber, string fundKey, string expenditureName)
         {
             var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);

@@ -21,7 +21,6 @@ namespace UILayer
             Application.SetCompatibleTextRenderingDefault(false);
             //try
             //{
-
             Application.Run(new Loading());
             //}
             //catch(Exception e)
