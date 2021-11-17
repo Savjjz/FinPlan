@@ -25,7 +25,7 @@ namespace UILayer
             this.period = period;
             _provider = new DataProvider();
             List<object> periods = new List<object>();
-            foreach(var p in _provider.GetAllWeeksData())
+            foreach (var p in _provider.GetAllWeeksData())
             {
                 periods.Add(p.Number);
             }
@@ -60,9 +60,6 @@ namespace UILayer
                 expensesTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
                 expensesTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
 
-                ExpendituresMatrix matrix = new ExpendituresMatrix(fundKey);
-                var exp = matrix.GetMatrix();
-
                 foreach (var m in currentExpenses)
                 {
                     expensesNames.Add(m.Name);
@@ -71,27 +68,38 @@ namespace UILayer
                 {
                     expensesTable.RowCount++;
                     expensesTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-                    Label expenseName = new Label();
+                    ExpenseLabel expenseName = new ExpenseLabel(currentExpenses[i].Id);
                     expenseName.Dock = DockStyle.Fill;
                     expenseName.TextAlign = ContentAlignment.MiddleCenter;
                     expenseName.Text = expensesNames[i];
+                    expenseName.Click += new EventHandler(ExpenseClick);
+                    expenseName.Cursor = Cursors.Hand;
                     expensesTable.Controls.Add(expenseName, 0, i);
                 }
                 expensesTable.ColumnCount++;
                 expensesTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90F));
                 for (int j = 0; j < expensesNames.Count; j++)
                 {
-                    DrowExpenseLabel(currentExpenses[j].MoneySum, j, 1);
+                    DrowExpenseLabel(currentExpenses[j].Id, currentExpenses[j].MoneySum, j, 1);
                 }
             }
         }
 
-        private void DrowExpenseLabel(double sum, int row, int column)
+        private void ExpenseClick(object sender, EventArgs e)
         {
-            Label ExpenseLabel = new Label();
+            string id = ((ExpenseLabel)sender).Id;
+            Expenses form = new Expenses(id, fundKey);
+            form.Show();
+        }
+
+        private void DrowExpenseLabel(string id, double sum, int row, int column)
+        {
+            ExpenseLabel ExpenseLabel = new ExpenseLabel(id);
             ExpenseLabel.Dock = DockStyle.Fill;
             ExpenseLabel.TextAlign = ContentAlignment.MiddleCenter;
             ExpenseLabel.Text = sum.ToString();
+            ExpenseLabel.Click += new EventHandler(ExpenseClick);
+            ExpenseLabel.Cursor = Cursors.Hand;
             expensesTable.Controls.Add(ExpenseLabel, column, row);
         }
 

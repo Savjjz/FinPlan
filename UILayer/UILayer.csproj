@@ -17,10 +17,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Interop.Microsoft.Office.Core">
+      <HintPath>..\..\..\..\Downloads\Telegram Desktop\Interop.Microsoft.Office.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Interop.Excel">
+      <HintPath>..\..\..\..\Downloads\Telegram Desktop\Interop.Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="FundLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="FundPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExpenseLabel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">

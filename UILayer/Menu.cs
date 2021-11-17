@@ -64,5 +64,11 @@ namespace UILayer
         {
             Application.Exit();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            EditFundDisribution form = new EditFundDisribution();
+            form.Show();
+        }
     }
 }

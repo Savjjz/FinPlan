@@ -140,7 +140,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <param name="fundKey">Номер фонда, на который приходится затрата</param>
         /// <param name="expenditureName">Название затраты</param>
         /// <param name="correctExpenditure">Корректная затрата</param>
-        public void EditExpenditureData(string fundKey, string expenditureName, Expenditure correctExpenditure)
+        public void EditExpenditureData(string fundKey, string expenditureId, Expenditure correctExpenditure)
         {
             DataProvider provider = new DataProvider();
             var currentWeek = DbContext.Weeks.FirstOrDefault(p => p.Id == provider.FindLastWeekInDb().Id);
@@ -152,9 +152,28 @@ namespace BusinessLogicLayer.DbBlock
                                 .Where(p => p.FundId == fund.Id).ToArray()
                                 .FirstOrDefault(p => p.WeekId == week.Id);
 
-            var expenditure = fundCondition.Expenditures.FirstOrDefault(p => p.Name == expenditureName);
+            var expenditure = fundCondition.Expenditures.FirstOrDefault(p => p.Id == expenditureId);
             fundCondition.MoneySumAfterFinPlan = Math.Round(fundCondition.MoneySumAfterFinPlan + correctExpenditure.TotalSum - expenditure.MoneySum, 2);
             expenditure.MoneySum = correctExpenditure.TotalSum;
+            expenditure.Name = correctExpenditure.Name;
+            DbContext.SaveChanges();
+        }
+
+        public void DeleteExpenditure(string fundKey, string expenditureId)
+        {
+            DataProvider provider = new DataProvider();
+            var currentWeek = DbContext.Weeks.FirstOrDefault(p => p.Id == provider.FindLastWeekInDb().Id);
+            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var week = DbContext.Weeks.FirstOrDefault(p => p.Number == currentWeek.Number);
+
+            var fundCondition = DbContext.FundConditions
+                                .Include(p => p.Expenditures)
+                                .Where(p => p.FundId == fund.Id).ToArray()
+                                .FirstOrDefault(p => p.WeekId == week.Id);
+
+            var expenditure = fundCondition.Expenditures.FirstOrDefault(p => p.Id == expenditureId);
+            fundCondition.MoneySumAfterFinPlan = Math.Round(fundCondition.MoneySumAfterFinPlan + expenditure.MoneySum, 2);
+            DbContext.Expenditures.Remove(expenditure);
             DbContext.SaveChanges();
         }
 
