@@ -21,7 +21,7 @@ namespace BusinessLogicLayer.BankrollDistribution
 
         public void DistributeMoneyForFunds(Bankroll bankroll, FundsGroup fundsGroup)
         {
-            double transferSum = 0.0;
+            decimal transferSum = 0.0M;
 
             for(int counter = 0; counter < fundsGroup.FundsGroupA.Length; counter++)
             {
@@ -43,7 +43,7 @@ namespace BusinessLogicLayer.BankrollDistribution
             }
 
             bankroll.WithdrawMoney(transferSum);
-            transferSum = 0.0;
+            transferSum = 0.0M;
 
             for (int counter = 0; counter < fundsGroup.FundsGroupB.Length; counter++)
             {
@@ -62,14 +62,14 @@ namespace BusinessLogicLayer.BankrollDistribution
         private void DistributeFromGoods(Fund fund, Bankroll bankroll)
         {
             fund.AddMoneyWithPercents(bankroll.GooodsRevenue);
-            double distributeFromService = 0;
+            decimal distributeFromService = 0;
             Revenue revenue = new Revenue(distributeFromService, fund.TotalMoney);
             fund.SetRevenue(revenue);
         }
         private void DistributeFromService(Fund fund, Bankroll bankroll)
         {
             fund.AddMoneyWithPercents(bankroll.ServiceRevenue);
-            double distributeFromGoods = 0;
+            decimal distributeFromGoods = 0;
             Revenue revenue = new Revenue(fund.TotalMoney, distributeFromGoods);
             fund.SetRevenue(revenue);
         }
@@ -85,8 +85,8 @@ namespace BusinessLogicLayer.BankrollDistribution
         {
             fund.AddMoneyWithPercents(bankroll.GooodsRevenue);
             fund.AddMoneyWithPercents(bankroll.ServiceRevenue);
-            double moneyFromService = fund.PredictablePercent * bankroll.ServiceRevenue / 100;
-            double moneyFromGoods = fund.PredictablePercent * bankroll.GooodsRevenue / 100;
+            decimal moneyFromService = fund.PredictablePercent * bankroll.ServiceRevenue / 100;
+            decimal moneyFromGoods = fund.PredictablePercent * bankroll.GooodsRevenue / 100;
             Revenue revenue = new Revenue(moneyFromService, moneyFromGoods);
             fund.SetRevenue(revenue);
         }

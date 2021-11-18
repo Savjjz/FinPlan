@@ -9,9 +9,9 @@ namespace DataLayer.Entities
         /// <summary>
         /// ДС в фонде в некоторую неделю до финансового планирования 
         /// </summary>
-        public double MoneySumBeforeFinPlan { get; set; }
+        public decimal MoneySumBeforeFinPlan { get; set; }
 
-        public double MoneySumAfterFinPlan { get; set; }
+        public decimal MoneySumAfterFinPlan { get; set; }
         /// <summary>
         /// Связь 1 to many с Week
         /// </summary>
@@ -22,7 +22,7 @@ namespace DataLayer.Entities
         /// </summary>
         public FundModel Fund { get; set; }
         public string FundId { get; set; }
-        public double PercentFromBankroll { get; set; }
+        public decimal PercentFromBankroll { get; set; }
         /// <summary>
         /// Связь 1 to many с Expenditure
         /// </summary>

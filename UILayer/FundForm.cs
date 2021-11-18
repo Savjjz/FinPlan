@@ -157,10 +157,10 @@ namespace Supervisor
     }
     public class FundPeriod
     {
-        public double moneyStart;
-        public double income;
-        public double moneyBeforeExpenses;
+        public decimal moneyStart;
+        public decimal income;
+        public decimal moneyBeforeExpenses;
         public List<ExpenditureModel> expences;
-        public double moneyEnd;
+        public decimal moneyEnd;
     }
 }

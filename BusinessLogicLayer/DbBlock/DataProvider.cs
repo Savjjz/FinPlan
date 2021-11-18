@@ -68,7 +68,7 @@ namespace BusinessLogicLayer.DbBlock
             return uniqueExpendituresNames.Count;
         }
 
-        public double GetExpendituresSumInFundByWeek(int weekNumber, string fundKey)
+        public decimal GetExpendituresSumInFundByWeek(int weekNumber, string fundKey)
         {
             var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
             var week = FindWeekByNumber(weekNumber);
@@ -76,7 +76,7 @@ namespace BusinessLogicLayer.DbBlock
             var fundCondition = fundConditions.FirstOrDefault(p => p.WeekId == week.Id);
             var expenditures = DbContext.Expenditures.Where(p => p.WeekId == week.Id).Where(p => p.FundConditionId == fundCondition.Id).ToArray();
 
-            double expendituresSum = 0;
+            decimal expendituresSum = 0;
             foreach (var expenditure in expenditures)
             {
                 expendituresSum += expenditure.MoneySum;
@@ -155,7 +155,7 @@ namespace BusinessLogicLayer.DbBlock
             return transactions;
         }
 
-        public double GetTransactionsSumInFunByWeek(int weekNumber, string fundKey)
+        public decimal GetTransactionsSumInFunByWeek(int weekNumber, string fundKey)
         {
             var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
             var week = FindWeekByNumber(weekNumber);
@@ -163,7 +163,7 @@ namespace BusinessLogicLayer.DbBlock
             var fundCondition = fundConditions.FirstOrDefault(p => p.WeekId == week.Id);
             var transactions = DbContext.TransactionBetweenFunds.Where(p => p.WeekId == week.Id).Where(p => p.FundConditionId == fundCondition.Id).ToArray();
 
-            double transactionsSum = 0;
+            decimal transactionsSum = 0;
             foreach (var transaction in transactions)
             {
                 transactionsSum += transaction.MoneySum;

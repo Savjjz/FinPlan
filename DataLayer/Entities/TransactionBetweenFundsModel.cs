@@ -9,7 +9,7 @@ namespace DataLayer.Entities
         /// <summary>
         /// Величина перевода
         /// </summary>
-        public double MoneySum { get; set; }
+        public decimal MoneySum { get; set; }
         /// <summary>
         /// Название транзакции
         /// </summary>

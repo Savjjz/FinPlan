@@ -445,13 +445,13 @@ namespace BusinessLogicLayer.ExcelBlock
             var revenues = provider.GetRevenuesDataByWeek(CurrentWeek.Number);
             var funds = provider.GetFundsData();
 
-            double totalRevenue = 0.0;
+            decimal totalRevenue = 0.0M;
             foreach(var r in revenues)
             {
                 totalRevenue += r.TotalSum;
             }
 
-            double totalForecast = 0.0;
+            decimal totalForecast = 0.0M;
             foreach(var f in funds)
             {
                 totalForecast += f.MonthForecast;

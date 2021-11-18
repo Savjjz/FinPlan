@@ -53,14 +53,14 @@ namespace Supervisor
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            double serviceSum = 0;
-            double goodsSum = 0;
-            double totalSum = 0;
+            decimal serviceSum = 0;
+            decimal goodsSum = 0;
+            decimal totalSum = 0;
 
             try
             {
-                serviceSum = double.Parse(serviceRevenueSum.Text);
-                goodsSum = double.Parse(goodsRevenueSum.Text);
+                serviceSum = decimal.Parse(serviceRevenueSum.Text);
+                goodsSum = decimal.Parse(goodsRevenueSum.Text);
                 totalSum = Math.Round(serviceSum + goodsSum, 2);
             }
             catch

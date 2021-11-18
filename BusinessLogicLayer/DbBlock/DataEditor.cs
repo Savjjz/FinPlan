@@ -96,7 +96,7 @@ namespace BusinessLogicLayer.DbBlock
             var fundsConditions = DbContext.FundConditions.Where(p => p.WeekId == CurrentWeek.Id).ToArray();
             var fundCondition = fundsConditions.FirstOrDefault(p => p.FundId == fund.Id);
 
-            double previousFundBalance = 0;
+            decimal previousFundBalance = 0;
             if (CurrentWeek.Number != Provider.FindFirstWeekInDb().Number)
             {
                 var previousWeek = DbContext.Weeks.FirstOrDefault(p => p.Number == CurrentWeek.Number - 1);
@@ -110,7 +110,7 @@ namespace BusinessLogicLayer.DbBlock
                 .ToArray()
                 .Where(p => p.FundConditionId == fundCondition.Id);
 
-            double expendituresSum = 0;
+            decimal expendituresSum = 0;
             foreach(var expenditure in expenditures)
             {
                 expendituresSum += expenditure.MoneySum;
@@ -121,14 +121,14 @@ namespace BusinessLogicLayer.DbBlock
                 .ToArray()
                 .Where(p => p.FundConditionId == fundCondition.Id);
 
-            double transactionsSum = 0;
+            decimal transactionsSum = 0;
             foreach(var transaction in transactions)
             {
                 transactionsSum += transaction.MoneySum;
             }
 
-            double newBalanceBeforeFinPlan = previousFundBalance + revenue.TotalSum;
-            double newBalanceAfterFinPlan = newBalanceBeforeFinPlan - expendituresSum + transactionsSum;
+            decimal newBalanceBeforeFinPlan = previousFundBalance + revenue.TotalSum;
+            decimal newBalanceAfterFinPlan = newBalanceBeforeFinPlan - expendituresSum + transactionsSum;
             fundCondition.MoneySumBeforeFinPlan = Math.Round(newBalanceBeforeFinPlan, 2);
             fundCondition.MoneySumAfterFinPlan = Math.Round(newBalanceAfterFinPlan, 2);
         }

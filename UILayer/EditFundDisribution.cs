@@ -20,7 +20,7 @@ namespace UILayer
         {
             _provider = new DataProvider();
             _editor = new DataEditor();
-            double[] percents = new double[15];
+            decimal[] percents = new decimal[15];
             var funds  = _provider.GetFundsData();
             for (int counter = 0; counter <funds.Length; counter++)
             {
@@ -41,10 +41,10 @@ namespace UILayer
 
         private void btnChangePercents_Click(object sender, EventArgs e)
         {
-            double[] newPercents = new double[_percentsBoxes.Length];
+            decimal[] newPercents = new decimal[_percentsBoxes.Length];
             for (int counter = 0; counter < _percentsBoxes.Length; counter++)
             {
-                newPercents[counter] = Convert.ToDouble(_percentsBoxes[counter].Text);
+                newPercents[counter] = Convert.ToDecimal(_percentsBoxes[counter].Text);
             }
             
             if (!IsPercentsCorrect(newPercents))
@@ -87,10 +87,10 @@ namespace UILayer
             _editor.EdditFundsPercentsData(funds.ToArray());
         }
 
-        private bool IsPercentsCorrect(double[] percents)
+        private bool IsPercentsCorrect(decimal[] percents)
         {
-            double servicePercents = 100;
-            double goodsPercnets = 100;
+            decimal servicePercents = 100;
+            decimal goodsPercnets = 100;
 
             for (int i = 0; i < 4; i++)
             {
@@ -112,7 +112,7 @@ namespace UILayer
             if ((servicePercents < 0) || (goodsPercnets < 0))
                 return false;
 
-            double remainder = 100;
+            decimal remainder = 100;
 
             for (int i = 4; i < 12; i++)
             {

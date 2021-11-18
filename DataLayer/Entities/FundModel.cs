@@ -20,15 +20,15 @@ namespace DataLayer.Entities
         /// <summary>
         /// Процент распределения в фонд от ДС
         /// </summary>
-        public double PercentFromBanckroll { get; set; }
+        public decimal PercentFromBanckroll { get; set; }
         /// <summary>
         /// Сумма денег в фонде
         /// </summary>
-        public double TotalSum { get; set; }
+        public decimal TotalSum { get; set; }
         /// <summary>
         /// Прогноз распределения в фонд за месяц
         /// </summary>
-        public double MonthForecast { get; set; }
+        public decimal MonthForecast { get; set; }
         /// <summary>
         /// Связь many to many с Bankroll
         /// </summary>

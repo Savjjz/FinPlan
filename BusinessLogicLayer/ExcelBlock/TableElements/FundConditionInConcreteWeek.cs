@@ -93,7 +93,7 @@ namespace BusinessLogicLayer.ExcelBlock.TableElements
             foreach (var fund in FundConditions)
             {
                 var transactions = fund.TransactionBetweenFunds.ToArray();
-                double transactionsSum = 0;
+                decimal transactionsSum = 0;
                 foreach (var transaction in transactions)
                 {
                     transactionsSum += transaction.MoneySum;

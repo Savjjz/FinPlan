@@ -17,11 +17,11 @@ namespace BusinessLogicLayer.BankrollDistribution
             CurrentFund = Provider.FindFundByKey(fundKey);
         }
 
-        public double[,] GetMatrix()
+        public decimal[,] GetMatrix()
         {
             var weeks = Provider.GetAllWeeksData();
             var expendituresNames = GetUniqueExpendituresNames();
-            double[,] expenditureMatrix = new double[expendituresNames.Count, weeks.Length];
+            decimal[,] expenditureMatrix = new decimal[expendituresNames.Count, weeks.Length];
 
             for (int expCounter = 0; expCounter < expenditureMatrix.GetLength(0); expCounter++)
             {

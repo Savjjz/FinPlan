@@ -28,16 +28,16 @@ namespace Supervisor
             int periodLength = endDate.Subtract(startDate).Days + 1;
 
             var allFunds = provider.GetFundsData();
-            double[] balance1 = new double[allFunds.Length];
-            double[] balance2 = new double[allFunds.Length];
-            double[] income = new double[allFunds.Length];
-            double[] moneyTransfer = new double[allFunds.Length];
-            double[] expenses = new double[allFunds.Length];
+            decimal[] balance1 = new decimal[allFunds.Length];
+            decimal[] balance2 = new decimal[allFunds.Length];
+            decimal[] income = new decimal[allFunds.Length];
+            decimal[] moneyTransfer = new decimal[allFunds.Length];
+            decimal[] expenses = new decimal[allFunds.Length];
 
-            double startBalanceSum = 0;
-            double incomeSum = 0;
-            double expensesSum = 0;
-            double endBalanceSum = 0;
+            decimal startBalanceSum = 0;
+            decimal incomeSum = 0;
+            decimal expensesSum = 0;
+            decimal endBalanceSum = 0;
 
             if (currentWeek.Bankroll == null)
             {

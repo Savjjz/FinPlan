@@ -7,16 +7,16 @@ namespace BusinessLogicLayer.BankrollDistribution
     public class Revenue
     {
 
-        public double TotalMoney { get; private set; }
-        public double MoneyFromService { get; private set; }
-        public double MoneyFromGoods { get; private set; }
+        public decimal TotalMoney { get; private set; }
+        public decimal MoneyFromService { get; private set; }
+        public decimal MoneyFromGoods { get; private set; }
 
         /// <summary>
         /// Конструктор для случаев, когда фонд получает деньги отдельно из дохода от продажи товаров и услуг
         /// </summary>
         /// <param name="moneyFromService">ДС от услуг</param>
         /// <param name="moneyFromGoods">ДС от товаров</param>
-        public Revenue(double moneyFromService, double moneyFromGoods)
+        public Revenue(decimal moneyFromService, decimal moneyFromGoods)
         {
             MoneyFromService = moneyFromService;
             MoneyFromGoods = moneyFromGoods;
@@ -27,19 +27,19 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// Конструктор для случаев, когда фонд получает деньги напрямую из маржи
         /// </summary>
         /// <param name="moneyInFund">ДС от маржи</param>
-        public Revenue(double moneyInFund)
+        public Revenue(decimal moneyInFund)
         {
             TotalMoney = moneyInFund;
             MoneyFromGoods = 0;
             MoneyFromService = 0;
         }
 
-        public void AddMoney(double moneySum)
+        public void AddMoney(decimal moneySum)
         {
             TotalMoney += moneySum;
         }
 
-        public bool WithdrawMoney(double moneySum)
+        public bool WithdrawMoney(decimal moneySum)
         {
             if (TotalMoney >= moneySum)
             {

@@ -14,7 +14,7 @@ namespace Supervisor
         public delegate void UpdateHandler();
         public event UpdateHandler TransferCreated;
 
-        private double[] fundBalances = new double[15];
+        private decimal[] fundBalances = new decimal[15];
         private DataAdder _dataAdder;
         private DataProvider _dataProvider;
 
@@ -24,7 +24,7 @@ namespace Supervisor
             _dataProvider = new DataProvider();
 
             var fundConditions = _dataProvider.GetFundConditionsByWeek(_dataProvider.FindLastWeekInDb().Number);
-            double[] fromDB = new double[fundConditions.Length];
+            decimal[] fromDB = new decimal[fundConditions.Length];
 
             for (int counter = 0; counter < fundConditions.Length; counter++)
             {
@@ -63,7 +63,7 @@ namespace Supervisor
 
         private void Submit_Click(object sender, EventArgs e)
         {
-            double value = double.Parse(transferValue.Text);
+            decimal value = decimal.Parse(transferValue.Text);
             string _donorFundKey = fundPicker1.Text;
             string _endowmentFunKey = fundPicker2.Text;
             try

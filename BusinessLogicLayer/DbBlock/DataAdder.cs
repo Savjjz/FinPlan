@@ -134,7 +134,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <param name="donorFundKey">Фонд-донор</param>
         /// <param name="endowmentFundKey">Дотационный фонд</param>
         /// <param name="transferSum">Сумма транзакции</param>
-        public void TransferMoneyBetweenFunds(string donorFundKey, string endowmentFundKey, double transferSum)
+        public void TransferMoneyBetweenFunds(string donorFundKey, string endowmentFundKey, decimal transferSum)
         {
             DataProvider provider = new DataProvider();
             var funds = DbContext.Funds.ToArray();

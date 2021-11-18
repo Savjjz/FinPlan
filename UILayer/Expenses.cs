@@ -18,7 +18,7 @@ namespace Supervisor
         public delegate void UpdateHandler();
         public event UpdateHandler ExpenceCreated;
 
-        private double[] fundBalances = new double[15];
+        private decimal[] fundBalances = new decimal[15];
         public Expenses(string id, string fundKey)
         {
             this.fundKey = fundKey;
@@ -28,7 +28,7 @@ namespace Supervisor
             var exp = provider.GetAllExpendutiresData().FirstOrDefault(p => p.Id == id);
             
             var fundConditions = provider.GetFundConditionsByWeek(provider.FindLastWeekInDb().Number);
-            double[] fromDB = new double[fundConditions.Length];
+            decimal[] fromDB = new decimal[fundConditions.Length];
 
             for (int counter = 0; counter < fundConditions.Length; counter++)
             {
@@ -49,7 +49,7 @@ namespace Supervisor
         {
             DataProvider provider = new DataProvider();
             var fundConditions = provider.GetFundConditionsByWeek(provider.FindLastWeekInDb().Number);
-            double[] fromDB = new double[fundConditions.Length];
+            decimal[] fromDB = new decimal[fundConditions.Length];
 
             for (int counter = 0; counter < fundConditions.Length; counter++)
             {
@@ -68,7 +68,7 @@ namespace Supervisor
             {
                 if (id == null)
                 {
-                    Expenditure expenditure = new Expenditure(Convert.ToDouble(expenditureSum.Text), expenditureName.Text);
+                    Expenditure expenditure = new Expenditure(Convert.ToDecimal(expenditureSum.Text), expenditureName.Text);
                     DataAdder dataAdder = new DataAdder();
                     dataAdder.AddExpenditure(fundPicker.Text, expenditure);
                     this.Close();
@@ -77,7 +77,7 @@ namespace Supervisor
                 else
                 {
                     DataEditor dataEditor = new DataEditor();
-                    Expenditure expenditure = new Expenditure(Convert.ToDouble(expenditureSum.Text), expenditureName.Text);
+                    Expenditure expenditure = new Expenditure(Convert.ToDecimal(expenditureSum.Text), expenditureName.Text);
                     dataEditor.EditExpenditureData(fundKey, id, expenditure);
                     this.Close();
                     MessageBox.Show("Трата успешно отредактирована");

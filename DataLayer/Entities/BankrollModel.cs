@@ -12,15 +12,15 @@ namespace DataLayer.Entities
         /// <summary>
         /// Выручка ДС за отчетную неделю
         /// </summary>
-        public double TotalSum { get; set; }
+        public decimal TotalSum { get; set; }
         /// <summary>
         /// Выручка от услуг
         /// </summary>
-        public double ServiceRevenue { get; set; }
+        public decimal ServiceRevenue { get; set; }
         /// <summary>
         /// Выручка от Продажи товаров
         /// </summary>
-        public double GoodsRevenue { get; set; }
+        public decimal GoodsRevenue { get; set; }
         /// <summary>
         /// Связь 1 to 1 с Week 
         /// </summary>

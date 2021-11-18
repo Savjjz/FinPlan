@@ -7,8 +7,8 @@ namespace BusinessLogicLayer.BankrollDistribution
     public class Expenditure
     {
         public string Name { get; private set; }
-        public double TotalSum { get; private set; }
-        public Expenditure(double totalSum, string name)
+        public decimal TotalSum { get; private set; }
+        public Expenditure(decimal totalSum, string name)
         {
             TotalSum = totalSum;
             Name = name;

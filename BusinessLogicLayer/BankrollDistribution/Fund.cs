@@ -13,11 +13,11 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// <summary>
         /// Сумма денег в фонде 
         /// </summary>
-        public double TotalMoney { get; private set; }
+        public decimal TotalMoney { get; private set; }
         /// <summary>
         /// Процент от распределения денег в фонд
         /// </summary>
-        public double PredictablePercent { get; private set; }
+        public decimal PredictablePercent { get; private set; }
         /// <summary>
         /// Ссылка на распределение в фонд за текущую неделю
         /// </summary>
@@ -27,25 +27,25 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// </summary>
         public List<Expenditure> Expenditures { get; set; } = new List<Expenditure>();
 
-        public Fund(string key, double totalMoney, double predictablePercent)
+        public Fund(string key, decimal totalMoney, decimal predictablePercent)
         {
             Key = key;
             TotalMoney = totalMoney;
             PredictablePercent = predictablePercent;
         }
 
-        public Fund(string key, double predictablePercent)
+        public Fund(string key, decimal predictablePercent)
         {
             Key = key;
             PredictablePercent = predictablePercent;
-            TotalMoney = 0.0;
+            TotalMoney = 0.0M;
         }
 
         /// <summary>
         /// Добавить деньги в фонд
         /// </summary>
         /// <param name="moneySum"></param>
-        public void AddMoney(double moneySum)
+        public void AddMoney(decimal moneySum)
         {
             TotalMoney += moneySum;
         }
@@ -54,9 +54,9 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// Добавить деньги в фонд за вычетом процентов
         /// </summary>
         /// <param name="moneySum"></param>
-        public void AddMoneyWithPercents(double moneySum)
+        public void AddMoneyWithPercents(decimal moneySum)
         {
-            double totalMoney = moneySum * PredictablePercent / 100;
+            decimal totalMoney = moneySum * PredictablePercent / 100;
             TotalMoney += Math.Round(totalMoney, 2);
         }
 
@@ -90,9 +90,9 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// Получить прогноз распределения ДС в фонд в течение месяца
         /// </summary>
         /// <returns></returns>
-        public double GetMonthForecast()
+        public decimal GetMonthForecast()
         {
-            double monthForecast = TotalMoney * 4;
+            decimal monthForecast = TotalMoney * 4;
             return Math.Round(monthForecast, 2);
         }
 

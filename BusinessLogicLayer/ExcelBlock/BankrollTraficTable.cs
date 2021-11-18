@@ -177,8 +177,8 @@ namespace BusinessLogicLayer.ExcelBlock
             
             for (int counter = 0; counter < weeks.Length; counter++)
             {
-                double moneyBeforeFinPlan = 0;
-                double moneyAfterFinPlan = 0;
+                decimal moneyBeforeFinPlan = 0;
+                decimal moneyAfterFinPlan = 0;
                 var fundConditionsCurrentWeek = fundConditions.Where(p => p.WeekId == weeks[counter].Id).ToArray();
 
                 foreach (var fund in fundConditionsCurrentWeek)

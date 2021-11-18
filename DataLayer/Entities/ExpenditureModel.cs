@@ -14,7 +14,7 @@ namespace DataLayer.Entities
         /// <summary>
         /// Сумма потраченных ДС
         /// </summary>
-        public double MoneySum { get; set; }
+        public decimal MoneySum { get; set; }
 
         /// <summary>
         /// Связь 1 to many с Week

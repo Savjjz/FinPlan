@@ -92,7 +92,7 @@ namespace UILayer
             form.Show();
         }
 
-        private void DrowExpenseLabel(string id, double sum, int row, int column)
+        private void DrowExpenseLabel(string id, decimal sum, int row, int column)
         {
             ExpenseLabel ExpenseLabel = new ExpenseLabel(id);
             ExpenseLabel.Dock = DockStyle.Fill;

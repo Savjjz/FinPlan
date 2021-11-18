@@ -9,15 +9,15 @@ namespace DataLayer.Entities
         /// <summary>
         /// Доход от услуг
         /// </summary>
-        public double SumFromService { get; set; }
+        public decimal SumFromService { get; set; }
         /// <summary>
         /// Доход от товаров
         /// </summary>
-        public double SumFromGoods { get; set; }
+        public decimal SumFromGoods { get; set; }
         /// <summary>
         /// Общий доход
         /// </summary>
-        public double TotalSum { get; set; }
+        public decimal TotalSum { get; set; }
         /// <summary>
         /// Связь 1 to many с Fund
         /// </summary>
