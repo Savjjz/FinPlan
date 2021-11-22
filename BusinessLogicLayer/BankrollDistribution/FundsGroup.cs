@@ -7,13 +7,18 @@ namespace BusinessLogicLayer.BankrollDistribution
 {
     public class FundsGroup
     {
-        public Fund[] FundsGroupA { get; private set; } = new Fund[4];
-        public Fund[] FundsGroupB { get; private set; } = new Fund[8];
-        public Fund[] FundsGroupC { get; private set; } = new Fund[3];
+        public Fund[] FundsGroupA { get; private set; }
+        public Fund[] FundsGroupB { get; private set; } 
+        public Fund[] FundsGroupC { get; private set; } 
 
         public FundsGroup()
         {
             DataProvider provider = new DataProvider();
+            FundDataProvider fundProvider = new FundDataProvider();
+
+            FundsGroupA = new Fund[fundProvider.GetFundGroupNumber('A')];
+            FundsGroupB = new Fund[fundProvider.GetFundGroupNumber('B')];
+            FundsGroupC = new Fund[fundProvider.GetFundGroupNumber('C')];
 
             int fundNumber = 1;
 
@@ -39,30 +44,6 @@ namespace BusinessLogicLayer.BankrollDistribution
                 FundsGroupC[counterC] = new Fund(fundKey, provider.FindFundByKey(fundKey).PercentFromBanckroll);
                 fundNumber++;
             }
-        }
-
-        public Fund[] GetAllFunds()
-        {
-            Fund[] allFunds = new Fund[FundsGroupA.Length + FundsGroupB.Length + FundsGroupC.Length];
-            int counter = 0;
-
-            foreach (var fund in FundsGroupA)
-            {
-                allFunds[counter] = fund;
-                counter++;
-            }
-            foreach (var fund in FundsGroupB)
-            {
-                allFunds[counter] = fund;
-                counter++;
-            }
-            foreach (var fund in FundsGroupC)
-            {
-                allFunds[counter] = fund;
-                counter++;
-            }
-
-            return allFunds;
         }
     }
 }
