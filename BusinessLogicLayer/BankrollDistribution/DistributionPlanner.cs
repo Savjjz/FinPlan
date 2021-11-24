@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DataLayer.AuxiliaryTypes;
 
 namespace BusinessLogicLayer.BankrollDistribution
 {
@@ -10,10 +11,12 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// Неделя, в которую осуществляется распределение
         /// </summary>
         public Week CurrentWeek { get; private set; }
+
         public DistributionPlanner(Week currentWeek) 
         {
             CurrentWeek = currentWeek;
         }
+
         public DistributionPlanner()
         {
 
@@ -21,41 +24,34 @@ namespace BusinessLogicLayer.BankrollDistribution
 
         public void DistributeMoneyForFunds(Bankroll bankroll, FundsGroup fundsGroup)
         {
-            decimal transferSum = 0.0M;
+            decimal totalSum = 0.0M;
 
-            for(int counter = 0; counter < fundsGroup.FundsGroupA.Length; counter++)
+            for (int columnCounter = 0; columnCounter < fundsGroup.FundsGroups.Length; columnCounter++)
             {
-                if (counter == 0)
+                for (int rowCounter = 0; rowCounter < fundsGroup.FundsGroups[columnCounter].Length; rowCounter++)
                 {
-                    DistributeFromGoods(fundsGroup.FundsGroupA[counter], bankroll);
-                    transferSum += fundsGroup.FundsGroupA[counter].TotalMoney;
+                    switch (fundsGroup.FundsGroups[columnCounter][rowCounter].MoneySourceType)
+                    {
+                        case MoneySourceType.Goods:
+                            DistributeFromGoods(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            break;
+                        case MoneySourceType.Service:
+                            DistributeFromService(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            break;
+                        case MoneySourceType.ServiceAndGoods:
+                            DistributeFromGoodsAndService(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            break;
+                        case MoneySourceType.Total:
+                            DistributeFromTotalSum(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            break;
+                    }
                 }
-                else if (counter == 1)
-                {
-                    DistributeFromService(fundsGroup.FundsGroupA[counter], bankroll);
-                    transferSum += fundsGroup.FundsGroupA[counter].TotalMoney;
-                }
-                else
-                {
-                    DistributeFromGoodsAndService(fundsGroup.FundsGroupA[counter], bankroll);
-                    transferSum += fundsGroup.FundsGroupA[counter].TotalMoney;
-                }
-            }
-
-            bankroll.WithdrawMoney(transferSum);
-            transferSum = 0.0M;
-
-            for (int counter = 0; counter < fundsGroup.FundsGroupB.Length; counter++)
-            {
-                DistributeFromTotalSum(fundsGroup.FundsGroupB[counter], bankroll);
-                transferSum += fundsGroup.FundsGroupB[counter].TotalMoney;
-            }
-
-            bankroll.WithdrawMoney(transferSum);
-
-            for (int counter = 0; counter < fundsGroup.FundsGroupC.Length; counter++)
-            {
-                DistributeFromTotalSum(fundsGroup.FundsGroupC[counter], bankroll);
+                bankroll.WithdrawMoney(totalSum);
+                totalSum = 0.0M;
             }
         }
 

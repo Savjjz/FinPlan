@@ -352,11 +352,6 @@ namespace BusinessLogicLayer.ExcelBlock
                 currentCell = "C" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
                 range.Value = Provider.FindFundConditionByWeek(CurrentWeek.Number, fund.Key).PercentFromBankroll;
-                //range.Value = fund.PercentFromBanckroll;
-
-                currentCell = "G" + Convert.ToString(lineNumber);
-                range = Worksheet.get_Range(currentCell);
-                range.Value = fund.MonthForecast;
 
                 RevenueModel revenue = revenues.FirstOrDefault(a => a.FundId == fund.Id);
 
@@ -377,6 +372,10 @@ namespace BusinessLogicLayer.ExcelBlock
                 currentCell = "F" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
                 range.Value = revenue.TotalSum;
+
+                currentCell = "G" + Convert.ToString(lineNumber);
+                range = Worksheet.get_Range(currentCell);
+                range.Value = revenue.TotalSum * 4;
             }
 
             void LineFillingGroupsBC(int lineNumber, FundModel fund, RevenueModel[] revenues)
@@ -393,11 +392,6 @@ namespace BusinessLogicLayer.ExcelBlock
                 currentCell = "C" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
                 range.Value = Provider.FindFundConditionByWeek(CurrentWeek.Number, fund.Key).PercentFromBankroll;
-                //range.Value = fund.PercentFromBanckroll;
-
-                currentCell = "G" + Convert.ToString(lineNumber);
-                range = Worksheet.get_Range(currentCell);
-                range.Value = fund.MonthForecast;
 
                 RevenueModel revenue = revenues.FirstOrDefault(a => a.FundId == fund.Id);
 
@@ -408,6 +402,10 @@ namespace BusinessLogicLayer.ExcelBlock
                 currentCell = "F" + Convert.ToString(lineNumber);
                 range = Worksheet.get_Range(currentCell);
                 range.Value = revenue.TotalSum;
+
+                currentCell = "G" + Convert.ToString(lineNumber);
+                range = Worksheet.get_Range(currentCell);
+                range.Value = revenue.TotalSum * 4;
             }
 
             const int fundsGroupANumber = 4;
@@ -443,19 +441,14 @@ namespace BusinessLogicLayer.ExcelBlock
         private void CountTotalRevenue(DataProvider provider)
         {
             var revenues = provider.GetRevenuesDataByWeek(CurrentWeek.Number);
-            var funds = provider.GetFundsData();
-
             decimal totalRevenue = 0.0M;
-            foreach(var r in revenues)
+
+            foreach (var r in revenues)
             {
                 totalRevenue += r.TotalSum;
             }
 
-            decimal totalForecast = 0.0M;
-            foreach(var f in funds)
-            {
-                totalForecast += f.MonthForecast;
-            }
+            decimal totalForecast = totalRevenue * 4;
 
             Excel.Range range = Worksheet.get_Range("F30");
             range.Value = Math.Round(totalRevenue, 2);

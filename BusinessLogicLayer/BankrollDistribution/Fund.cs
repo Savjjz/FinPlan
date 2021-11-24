@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DataLayer.AuxiliaryTypes;
 
 namespace BusinessLogicLayer.BankrollDistribution
 {
@@ -10,28 +11,33 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// Код фонда
         /// </summary>
         public string Key { get; private set; }
+
         /// <summary>
         /// Сумма денег в фонде 
         /// </summary>
         public decimal TotalMoney { get; private set; }
+
         /// <summary>
         /// Процент от распределения денег в фонд
         /// </summary>
         public decimal PredictablePercent { get; private set; }
+
         /// <summary>
         /// Ссылка на распределение в фонд за текущую неделю
         /// </summary>
         public Revenue Revenue { get; private set; }
-        /// <summary>
-        /// Список расходов фонда за текущую неделю 
-        /// </summary>
-        public List<Expenditure> Expenditures { get; set; } = new List<Expenditure>();
 
-        public Fund(string key, decimal totalMoney, decimal predictablePercent)
+        /// <summary>
+        /// Источник из которого поступают деньги в фонд
+        /// </summary>
+        public MoneySourceType  MoneySourceType { get; private set; }
+
+        public Fund(string key, decimal predictablePercent, MoneySourceType moneySourceType)
         {
             Key = key;
-            TotalMoney = totalMoney;
             PredictablePercent = predictablePercent;
+            MoneySourceType = moneySourceType;
+            TotalMoney = 0.0M;
         }
 
         public Fund(string key, decimal predictablePercent)
@@ -39,15 +45,6 @@ namespace BusinessLogicLayer.BankrollDistribution
             Key = key;
             PredictablePercent = predictablePercent;
             TotalMoney = 0.0M;
-        }
-
-        /// <summary>
-        /// Добавить деньги в фонд
-        /// </summary>
-        /// <param name="moneySum"></param>
-        public void AddMoney(decimal moneySum)
-        {
-            TotalMoney += moneySum;
         }
 
         /// <summary>
@@ -60,22 +57,6 @@ namespace BusinessLogicLayer.BankrollDistribution
             TotalMoney += Math.Round(totalMoney, 2);
         }
 
-        /// <summary>
-        /// Списать деньги со счета фонда
-        /// </summary>
-        /// <param name="moneySum"></param>
-        /// <returns></returns>
-        public bool WithdrawMoney(Expenditure expenditure)
-        {
-            Expenditures.Add(expenditure);
-            if (TotalMoney >= expenditure.TotalSum)
-            {
-                TotalMoney -= expenditure.TotalSum;
-                return true;
-            }
-            else
-                return false;
-        }
         
         /// <summary>
         /// Установить связь с распределением в фонд
@@ -95,7 +76,5 @@ namespace BusinessLogicLayer.BankrollDistribution
             decimal monthForecast = TotalMoney * 4;
             return Math.Round(monthForecast, 2);
         }
-
-
     }
 }

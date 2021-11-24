@@ -81,7 +81,21 @@ namespace ConsoleInterface
             //        Console.WriteLine(e.MoneySum);
             //    }
             //}
-            FundDataProvider provider = new FundDataProvider();
+
+            FundsGroup fundsGroup = new FundsGroup();
+            Bankroll bankroll = new Bankroll(2783410.32M, 1832588.35M, 950821.97M);
+            DistributionPlanner planner = new DistributionPlanner();
+            planner.DistributeMoneyForFunds(bankroll, fundsGroup);
+
+            foreach (var row in fundsGroup.FundsGroups)
+            {
+                foreach (var fund in row)
+                {
+                    Console.WriteLine($"{fund.Key}\t{fund.TotalMoney}\t{fund.PredictablePercent}\t{fund.MoneySourceType}");
+                }
+                Console.WriteLine();
+            }
+
 
             Console.WriteLine("Success");
             Console.ReadLine();

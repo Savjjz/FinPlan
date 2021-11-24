@@ -33,21 +33,5 @@ namespace BusinessLogicLayer.BankrollDistribution
             MoneyFromGoods = 0;
             MoneyFromService = 0;
         }
-
-        public void AddMoney(decimal moneySum)
-        {
-            TotalMoney += moneySum;
-        }
-
-        public bool WithdrawMoney(decimal moneySum)
-        {
-            if (TotalMoney >= moneySum)
-            {
-                TotalMoney -= moneySum;
-                return true;
-            }
-            return false;
-        }
-
     }
 }

@@ -18,36 +18,6 @@ namespace BusinessLogicLayer.DbBlock
             DbContext = new DataContext();
         }
 
-        /// <summary>
-        /// Добавить данные в бд
-        /// </summary>
-        /// <param name="fundsGroup">Группа фондов</param>
-        /// <param name="week">Данные о текущей недели</param>
-        /// <param name="bankroll">Данные о текущем распределении ДС</param>
-        public void SetData(FundsGroup fundsGroup, Week week, Bankroll bankroll)
-        {
-            WeekModel weekModel = SetWeekData(week);
-            BankrollModel bankrollModel = SetBankrollData(bankroll);
-            bankrollModel.Week = weekModel;
-            DbContext.Weeks.Add(weekModel);
-            DbContext.Bankrolls.Add(bankrollModel);
-
-            foreach (var currentFund in fundsGroup.FundsGroupA)
-            {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
-            }
-            foreach (var currentFund in fundsGroup.FundsGroupB)
-            {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
-            }
-            foreach (var currentFund in fundsGroup.FundsGroupC)
-            {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
-            }
-
-            DbContext.SaveChanges();
-        }
-
         public void SetNewWeekData(Week week)
         {
             WeekModel weekModel = SetWeekData(week);
@@ -64,17 +34,12 @@ namespace BusinessLogicLayer.DbBlock
             bankrollModel.Week = weekModel;
             DbContext.Bankrolls.Add(bankrollModel);
 
-            foreach (var currentFund in fundsGroup.FundsGroupA)
+            foreach (var row in fundsGroup.FundsGroups)
             {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
-            }
-            foreach (var currentFund in fundsGroup.FundsGroupB)
-            {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
-            }
-            foreach (var currentFund in fundsGroup.FundsGroupC)
-            {
-                AddDistributionData(currentFund, bankrollModel, weekModel);
+                foreach (var fund in row)
+                {
+                    AddDistributionData(fund, bankrollModel, weekModel);
+                }
             }
 
             DbContext.SaveChanges();
@@ -98,7 +63,6 @@ namespace BusinessLogicLayer.DbBlock
             if (fundCondition.MoneySumAfterFinPlan >= expenditure.TotalSum)
             {
                 fundCondition.MoneySumAfterFinPlan -= expenditure.TotalSum;
-                fund.TotalSum = fundCondition.MoneySumAfterFinPlan;
             }
             else
             {
@@ -174,18 +138,32 @@ namespace BusinessLogicLayer.DbBlock
                 throw new Exception("Невозможно совершить операцию: в фонде недостаточно средств");
             }
         }
+
+        public void AddNewFund(Fund fund, string newFundName)
+        {
+            FundModel fundModel = new FundModel
+            {
+                Name = newFundName,
+                Key = fund.Key,
+                PercentFromBanckroll = fund.PredictablePercent,
+                MoneySourceType = fund.MoneySourceType,
+                IsAcitve = true
+            };
+            DbContext.Funds.Add(fundModel);
+            DbContext.SaveChanges();
+        }
          
         /// <summary>
         /// Добавить в бд новое состояние фонда в текущую неделю
         /// </summary>
         /// <param name="fund">Номер фонда</param>
         /// <param name="week">Номер текущей недели</param>
-        private void AddFundConditionalData(FundModel fund, WeekModel week)
+        private void AddFundConditionData(FundModel fund, RevenueModel revenue, WeekModel week)
         {
             FundConditionModel fundCondition = new FundConditionModel
             {
-                MoneySumBeforeFinPlan = fund.TotalSum,
-                MoneySumAfterFinPlan = fund.TotalSum,
+                MoneySumBeforeFinPlan = revenue.TotalSum,
+                MoneySumAfterFinPlan = revenue.TotalSum,
                 PercentFromBankroll = fund.PercentFromBanckroll,
                 Fund = fund,
                 Week = week
@@ -203,7 +181,6 @@ namespace BusinessLogicLayer.DbBlock
         {
             var fundsInDb = DbContext.Funds.ToList();
             FundModel fundModel = fundsInDb.FirstOrDefault(p => p.Key == fund.Key);
-            fundModel.TotalSum += Math.Round(fund.TotalMoney, 2);
             RevenueModel revenueModel = new RevenueModel
             {
                 SumFromGoods = Math.Round(fund.Revenue.MoneyFromGoods, 2),
@@ -212,8 +189,7 @@ namespace BusinessLogicLayer.DbBlock
                 Fund = fundModel,
                 Bankroll = bankrollModel
             };
-            AddFundConditionalData(fundModel, week);
-            fundModel.MonthForecast = fund.GetMonthForecast();
+            AddFundConditionData(fundModel, revenueModel, week);
             fundModel.Revenues.Add(revenueModel);
             bankrollModel.Revenues.Add(revenueModel);
         }
