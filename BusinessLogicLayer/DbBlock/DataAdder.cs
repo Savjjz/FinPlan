@@ -34,7 +34,7 @@ namespace BusinessLogicLayer.DbBlock
             bankrollModel.Week = weekModel;
             DbContext.Bankrolls.Add(bankrollModel);
 
-            foreach (var row in fundsGroup.FundsGroups)
+            foreach (var row in fundsGroup.AllFunds)
             {
                 foreach (var fund in row)
                 {

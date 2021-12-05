@@ -338,6 +338,8 @@ namespace BusinessLogicLayer.ExcelBlock
 
         private void SetFundsDataToTable()
         {
+
+
             void LineFillingGroupA(int lineNumber, FundModel fund, RevenueModel[] revenues)
             {
                 Excel.Range range;
@@ -412,7 +414,7 @@ namespace BusinessLogicLayer.ExcelBlock
             const int fundsGroupBNumber = 12;
             const int fundsGroupCNumber = 15;
 
-            var funds = Provider.GetFundsData();
+            var funds = Provider.GetActiveFundsData();
             var revenues = Provider.GetRevenuesDataByWeek(CurrentWeek.Number);
 
             int startLine = 7;

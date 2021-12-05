@@ -26,27 +26,27 @@ namespace BusinessLogicLayer.BankrollDistribution
         {
             decimal totalSum = 0.0M;
 
-            for (int columnCounter = 0; columnCounter < fundsGroup.FundsGroups.Length; columnCounter++)
+            for (int columnCounter = 0; columnCounter < fundsGroup.AllFunds.Length; columnCounter++)
             {
-                for (int rowCounter = 0; rowCounter < fundsGroup.FundsGroups[columnCounter].Length; rowCounter++)
+                for (int rowCounter = 0; rowCounter < fundsGroup.AllFunds[columnCounter].Length; rowCounter++)
                 {
-                    switch (fundsGroup.FundsGroups[columnCounter][rowCounter].MoneySourceType)
+                    switch (fundsGroup.AllFunds[columnCounter][rowCounter].MoneySourceType)
                     {
                         case MoneySourceType.Goods:
-                            DistributeFromGoods(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
-                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            DistributeFromGoods(fundsGroup.AllFunds[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.AllFunds[columnCounter][rowCounter].TotalMoney;
                             break;
                         case MoneySourceType.Service:
-                            DistributeFromService(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
-                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            DistributeFromService(fundsGroup.AllFunds[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.AllFunds[columnCounter][rowCounter].TotalMoney;
                             break;
                         case MoneySourceType.ServiceAndGoods:
-                            DistributeFromGoodsAndService(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
-                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            DistributeFromGoodsAndService(fundsGroup.AllFunds[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.AllFunds[columnCounter][rowCounter].TotalMoney;
                             break;
                         case MoneySourceType.Total:
-                            DistributeFromTotalSum(fundsGroup.FundsGroups[columnCounter][rowCounter], bankroll);
-                            totalSum += fundsGroup.FundsGroups[columnCounter][rowCounter].TotalMoney;
+                            DistributeFromTotalSum(fundsGroup.AllFunds[columnCounter][rowCounter], bankroll);
+                            totalSum += fundsGroup.AllFunds[columnCounter][rowCounter].TotalMoney;
                             break;
                     }
                 }

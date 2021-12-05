@@ -6,6 +6,7 @@ using BusinessLogicLayer.DbBlock;
 using BusinessLogicLayer.ExcelBlock;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLogicLayer.DbBlock.DataProviders;
 
 namespace ConsoleInterface
 {
@@ -81,20 +82,42 @@ namespace ConsoleInterface
             //        Console.WriteLine(e.MoneySum);
             //    }
             //}
+            //Fund fund1 = new Fund("A5", 1.0M, DataLayer.AuxiliaryTypes.MoneySourceType.ServiceAndGoods);
+            //string fundName = "testFund";
 
-            FundsGroup fundsGroup = new FundsGroup();
-            Bankroll bankroll = new Bankroll(2783410.32M, 1832588.35M, 950821.97M);
-            DistributionPlanner planner = new DistributionPlanner();
-            planner.DistributeMoneyForFunds(bankroll, fundsGroup);
+            //DataAdder dataAdder = new DataAdder();
+            //dataAdder.AddNewFund(fund1, fundName);
 
-            foreach (var row in fundsGroup.FundsGroups)
-            {
-                foreach (var fund in row)
-                {
-                    Console.WriteLine($"{fund.Key}\t{fund.TotalMoney}\t{fund.PredictablePercent}\t{fund.MoneySourceType}");
-                }
-                Console.WriteLine();
-            }
+            //DateTime weekStart = new DateTime(2021, 5, 20);
+            //DateTime weekEnd = new DateTime(2021, 5, 30);
+            //Week week = new Week(weekStart, weekEnd);
+
+            //dataAdder.SetNewWeekData(week);
+
+            //FundsGroup fundsGroup = new FundsGroup();
+            //Bankroll bankroll = new Bankroll(2783410.32M, 1832588.35M, 950821.97M);
+            //DistributionPlanner planner = new DistributionPlanner();
+            //planner.DistributeMoneyForFunds(bankroll, fundsGroup);
+
+            //dataAdder.SetBankrollData(fundsGroup, bankroll);
+
+            //foreach (var row in fundsGroup.AllFunds)
+            //{
+            //    foreach (var fund in row)
+            //    {
+            //        Console.WriteLine($"{fund.Key}\t{fund.TotalMoney}\t{fund.PredictablePercent}\t{fund.MoneySourceType}");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            FRS_Table fRS_Table = new FRS_Table(2);
+            fRS_Table = new FRS_Table(5);
+
+            //FundDataProvider provider = new FundDataProvider();
+            //var fund = provider.FindFundByKey("A5");
+
+            //DataEditor dataEditor = new DataEditor();
+            //dataEditor.DeactivateFund(fund.Id);
 
 
             Console.WriteLine("Success");

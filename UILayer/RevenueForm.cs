@@ -107,7 +107,7 @@ namespace Supervisor
 
         private void UpdateOutputLabels()
         {
-            var funds = _dataProvider.GetFundsData();
+            var funds = _dataProvider.GetActiveFundsData();
             string[] fundsKeys = new string[funds.Length];
 
             for (int counter = 0; counter < funds.Length; counter++)

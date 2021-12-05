@@ -27,7 +27,7 @@ namespace Supervisor
             DateTime endDate = currentWeek.End;
             int periodLength = endDate.Subtract(startDate).Days + 1;
 
-            var allFunds = provider.GetFundsData();
+            var allFunds = provider.GetActiveFundsData();
             decimal[] balance1 = new decimal[allFunds.Length];
             decimal[] balance2 = new decimal[allFunds.Length];
             decimal[] income = new decimal[allFunds.Length];

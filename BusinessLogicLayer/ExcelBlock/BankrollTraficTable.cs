@@ -110,7 +110,7 @@ namespace BusinessLogicLayer.ExcelBlock
 
         private void SetConcreteFundsTraficeTable(DataProvider provider)
         {
-            var funds = provider.GetFundsData();
+            var funds = provider.GetActiveFundsData();
             foreach (var fund in funds)
             {
                 Excel.Worksheet worksheet = Worksheets.Add();
@@ -153,7 +153,7 @@ namespace BusinessLogicLayer.ExcelBlock
         /// <param name="provider">Проводник БД</param>
         private void SetFundsData(DataProvider provider)
         {
-            var funds = provider.GetFundsData();
+            var funds = provider.GetActiveFundsData();
             string cellNumber = "A4";
 
             foreach (var fund in funds)

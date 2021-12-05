@@ -192,17 +192,22 @@ namespace BusinessLogicLayer.DbBlock
 
         public void EdditFundName(string fundKey, string newName)
         {
-            DataProvider provider = new DataProvider();
             var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
             fund.Name = newName;
             DbContext.SaveChanges();
         }
 
-        public void DeactivateFund(string fundKey)
+        public void DeactivateFund(string fundId)
         {
-            DataProvider provider = new DataProvider();
-            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.FirstOrDefault(p => p.Id == fundId);
             fund.IsAcitve = false;
+            DbContext.SaveChanges();
+        }
+
+        public void ActivateFund(string fundId)
+        {
+            var fund = DbContext.Funds.FirstOrDefault(p => p.Id == fundId);
+            fund.IsAcitve = true;
             DbContext.SaveChanges();
         }
     }

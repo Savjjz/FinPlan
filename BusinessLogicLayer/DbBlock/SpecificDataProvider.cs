@@ -6,10 +6,10 @@ using System.Text;
 
 namespace BusinessLogicLayer.DbBlock
 {
-    public class FundDataProvider
+    public class SpecificDataProvider
     {
         DataContext DataContext;
-        public FundDataProvider()
+        public SpecificDataProvider()
         {
             DataContext dataContext = new DataContext();
             DataContext = dataContext;

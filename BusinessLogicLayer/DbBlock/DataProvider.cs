@@ -30,7 +30,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <returns></returns>
         public List<ExpenditureModel> GetExpedituresByFundKey(string fundKey)
         {
-            var funds = DbContext.Funds.Include(p => p.FundConditions).ThenInclude(p => p.Expenditures).ToArray();
+            var funds = DbContext.Funds.Include(p => p.FundConditions).ThenInclude(p => p.Expenditures).Where(p => p.IsAcitve == true).ToArray();
             FundModel currentFund = funds.FirstOrDefault(p => p.Key == fundKey);
 
             List<ExpenditureModel> expenditures = new List<ExpenditureModel>();
@@ -46,7 +46,7 @@ namespace BusinessLogicLayer.DbBlock
 
         public int GetUniqueExpendituresNumberByFundKey(string fundKey)
         {
-            var funds = DbContext.Funds.Include(p => p.FundConditions).ThenInclude(p => p.Expenditures).ToArray();
+            var funds = DbContext.Funds.Include(p => p.FundConditions).ThenInclude(p => p.Expenditures).Where(p => p.IsAcitve == true).ToArray();
             FundModel currentFund = funds.FirstOrDefault(p => p.Key == fundKey);
 
             List<ExpenditureModel> expenditures = new List<ExpenditureModel>();
@@ -70,7 +70,7 @@ namespace BusinessLogicLayer.DbBlock
 
         public decimal GetExpendituresSumInFundByWeek(int weekNumber, string fundKey)
         {
-            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.ToArray().Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var week = FindWeekByNumber(weekNumber);
             var fundConditions = DbContext.FundConditions.Where(p => p.FundId == fund.Id).ToArray();
             var fundCondition = fundConditions.FirstOrDefault(p => p.WeekId == week.Id);
@@ -88,7 +88,7 @@ namespace BusinessLogicLayer.DbBlock
         public ExpenditureModel[] GetExpenditureArrayByWeekAndFund(int weekNumber, string fundKey)
         {
             var currentWeek = DbContext.Weeks.FirstOrDefault(p => p.Number == weekNumber);
-            var currentFund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var currentFund = DbContext.Funds.ToArray().Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var currentFundCondition = DbContext.FundConditions.Include(p => p.Expenditures)
                 .Where(p => p.FundId == currentFund.Id)
                 .ToArray()
@@ -98,7 +98,7 @@ namespace BusinessLogicLayer.DbBlock
 
         public ExpenditureModel FindExpenditureByWeekAndFundKey(int weekNumber, string fundKey, string expenditureName)
         {
-            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.ToArray().Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var week = FindWeekByNumber(weekNumber);
             var fundConditions = DbContext.FundConditions.Where(p => p.FundId == fund.Id).ToArray();
             var fundCondition = fundConditions.FirstOrDefault(p => p.WeekId == week.Id);
@@ -107,34 +107,10 @@ namespace BusinessLogicLayer.DbBlock
             return expenditure;
         }
 
-        /// <summary>
-        /// Найти в бд состояния всех фондов на протяжение всех недель
-        /// </summary>
-        /// <returns>Матрица, где OX соответсвует неделям, а OY фонду</returns>
-        public FundConditionModel[,] GetAllFundConditionsMatrix()
-        {
-            var weeks = DbContext.Weeks.OrderBy(a => a.Number).ToArray();
-            var funds = DbContext.Funds.OrderBy(a => a.Key).ToArray();
-            FundConditionModel[,] fundConditions = new FundConditionModel[funds.Length, weeks.Length];
-
-            for (int weekCounter = 0; weekCounter < weeks.Length; weekCounter++)
-            {
-                var fundConditionsArr = DbContext.FundConditions
-                                                    .Include(p => p.TransactionBetweenFunds)
-                                                    .Where(p => p.WeekId == weeks[weekCounter].Id)
-                                                    .ToArray(); 
-                for (int fundCounter = 0; fundCounter < funds.Length; fundCounter++)
-                {
-                    fundConditions[fundCounter, weekCounter] = fundConditionsArr.FirstOrDefault(p => p.FundId == funds[fundCounter].Id);
-                }
-            }
-
-            return fundConditions;
-        }
 
         public List<TransactionBetweenFundsModel> GetTransactionsBetweenFundsByFundKey(string fundKey)
         {
-            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var fundsConditions = DbContext.FundConditions.Include(p => p.TransactionBetweenFunds).Where(p => p.FundId == fund.Id);
             List<TransactionBetweenFundsModel> transactions = new List<TransactionBetweenFundsModel>();
 
@@ -157,7 +133,7 @@ namespace BusinessLogicLayer.DbBlock
 
         public decimal GetTransactionsSumInFunByWeek(int weekNumber, string fundKey)
         {
-            var fund = DbContext.Funds.FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.ToArray().Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var week = FindWeekByNumber(weekNumber);
             var fundConditions = DbContext.FundConditions.Where(p => p.FundId == fund.Id).ToArray();
             var fundCondition = fundConditions.FirstOrDefault(p => p.WeekId == week.Id);
@@ -171,6 +147,7 @@ namespace BusinessLogicLayer.DbBlock
 
             return transactionsSum;
         }
+
 
         /// <summary>
         /// Найти в бд все состояния всех фондов
@@ -190,7 +167,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <returns></returns>
         public FundConditionModel FindFundConditionByWeek(int weekNumber, string fundKey)
         {
-            var fund = DbContext.Funds.Include(p => p.FundConditions).FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.Include(p => p.FundConditions).Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             WeekModel week = DbContext.Weeks.FirstOrDefault(p => p.Number == weekNumber);
             FundConditionModel fundCondition = fund.FundConditions.FirstOrDefault(p => p.WeekId == week.Id);
             return fundCondition;
@@ -203,7 +180,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <returns></returns>
         public FundConditionModel[] GetFundConditionsByWeek(int weekNumber)
         {
-            var funds = DbContext.Funds.ToArray();
+            var funds = DbContext.Funds.Where(p => p.IsAcitve == true).ToArray();
             var currentWeek = FindLastWeekInDb();
             FundConditionModel[] fundConditions = new FundConditionModel[funds.Length];
             
@@ -218,27 +195,40 @@ namespace BusinessLogicLayer.DbBlock
         }
 
         /// <summary>
-        /// Получить денежные средства, поступившие в прошлую неделю
+        /// Найти в бд состояния всех фондов на протяжение всех недель
         /// </summary>
-        /// <returns></returns>
-        public BankrollModel GetLastWeekBankrollData()
+        /// <returns>Матрица, где OX соответсвует неделям, а OY фонду</returns>
+        public FundConditionModel[,] GetAllFundConditionsMatrix()
         {
-            WeekModel lastWeek = FindLastWeekInDb();
-            BankrollModel bankroll = lastWeek.Bankroll;
-            return bankroll;
+            var weeks = DbContext.Weeks.OrderBy(a => a.Number).ToArray();
+            var funds = DbContext.Funds.Where(p => p.IsAcitve == true).OrderBy(a => a.Key).ToArray();
+            FundConditionModel[,] fundConditions = new FundConditionModel[funds.Length, weeks.Length];
+
+            for (int weekCounter = 0; weekCounter < weeks.Length; weekCounter++)
+            {
+                var fundConditionsArr = DbContext.FundConditions
+                                                    .Include(p => p.TransactionBetweenFunds)
+                                                    .Where(p => p.WeekId == weeks[weekCounter].Id)
+                                                    .ToArray();
+                for (int fundCounter = 0; fundCounter < funds.Length; fundCounter++)
+                {
+                    fundConditions[fundCounter, weekCounter] = fundConditionsArr.FirstOrDefault(p => p.FundId == funds[fundCounter].Id);
+                }
+            }
+
+            return fundConditions;
         }
+
 
         /// <summary>
-        /// Получить массив всех фондов, отсортированных по коду фонда
+        /// Получить массив активных фондов, отсортированных по коду фонда
         /// </summary>
         /// <returns></returns>
-        public FundModel[] GetFundsData()
+        public FundModel[] GetActiveFundsData()
         {
-            var funds = DbContext.Funds.OrderBy(a => a.Key).ToArray();
+            var funds = DbContext.Funds.Where(p => p.IsAcitve == true).OrderBy(a => a.Key).ToArray();
             return funds;
         }
-
-
 
         /// <summary>
         /// Получить распределение по фондам за последнюю неделю
@@ -258,7 +248,7 @@ namespace BusinessLogicLayer.DbBlock
 
         public RevenueModel FindRevenueToFundByWeek(int weekNumber, string fundKey)
         {
-            var fund = DbContext.Funds.ToArray().FirstOrDefault(p => p.Key == fundKey);
+            var fund = DbContext.Funds.ToArray().Where(p => p.IsAcitve == true).FirstOrDefault(p => p.Key == fundKey);
             var revenues = DbContext.Revenues.Where(a => a.BankrollId == FindWeekByNumber(weekNumber).Bankroll.Id).ToArray();
             var revenue = revenues.FirstOrDefault(p => p.FundId == fund.Id);
             return revenue;
@@ -271,7 +261,7 @@ namespace BusinessLogicLayer.DbBlock
         /// <returns></returns>
         public FundModel FindFundByKey(string fundKey)
         {
-            FundModel fund = DbContext.Funds.FirstOrDefault(a => a.Key == fundKey);
+            FundModel fund = DbContext.Funds.Where(p => p.IsAcitve == true).FirstOrDefault(a => a.Key == fundKey);
             return fund;
         }
 

@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DbBlock;
+using BusinessLogicLayer.DbBlock.DataProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,7 @@ namespace BusinessLogicLayer.BankrollDistribution
         /// <summary>
         /// все фонды вообще
         /// </summary>
-        public Fund[] AllFunds { get; private set; }
-        public Fund[][] FundsGroups { get; private set; }
+        public Fund[][] AllFunds { get; private set; }
         /// <summary>
         /// Буквы групп фондов
         /// </summary>
@@ -28,41 +28,19 @@ namespace BusinessLogicLayer.BankrollDistribution
 
         public FundsGroup()
         {
-            DataProvider provider = new DataProvider();
             FundDataProvider fundProvider = new FundDataProvider();
 
-            FundGroupsNumber = fundProvider.GetUniqueFundsGroupsNumbers().ToArray();
-            FundGroupsSizes = fundProvider.GetFundsGroupsSizes(FundGroupsNumber).ToArray();
+            FundGroupsNumber = fundProvider.GetActiveUniqueFundsGroupsNumbers().ToArray();
+            FundGroupsSizes = fundProvider.GetActiveFundsGroupsSizes(FundGroupsNumber).ToArray();
 
-            SetAllFundsData(provider, fundProvider);
-            SetFundsGroupsData(provider, fundProvider);
+            SetFundsGroupsData(fundProvider);
 
             DeleteThisLater();
         }
 
-        private void SetAllFundsData(DataProvider provider, FundDataProvider fundProvider)
+        private void SetFundsGroupsData(FundDataProvider fundProvider)
         {
-            AllFunds = new Fund[FundGroupsSizes.Sum()];
-            int fundNumber = 1;
-            int fundCounter = 0;
-
-            for (int groupCounter = 0; groupCounter < FundGroupsNumber.Length; groupCounter++)
-            {
-                for (int counter = 0; counter < FundGroupsSizes[groupCounter]; counter++)
-                {
-                    string fundKey = FundGroupsNumber[groupCounter] + Convert.ToString(fundNumber);
-                    var currentFund = provider.FindFundByKey(fundKey);
-                    AllFunds[fundCounter] = new Fund(fundKey, currentFund.PercentFromBanckroll, currentFund.MoneySourceType);
-                    fundNumber++;
-                    fundCounter++;
-                }
-                fundNumber = 1;
-            }
-        }
-
-        private void SetFundsGroupsData(DataProvider provider, FundDataProvider fundProvider)
-        {
-            FundsGroups = new Fund[FundGroupsNumber.Length][];
+            AllFunds = new Fund[FundGroupsNumber.Length][];
             int fundNumber = 1;
 
             for (int groupCounter = 0; groupCounter < FundGroupsNumber.Length; groupCounter++)
@@ -71,29 +49,28 @@ namespace BusinessLogicLayer.BankrollDistribution
                 for (int counter = 0; counter < FundGroupsSizes[groupCounter]; counter++)
                 {
                     string fundKey = FundGroupsNumber[groupCounter] + Convert.ToString(fundNumber);
-                    var currentFund = provider.FindFundByKey(fundKey);
+                    var currentFund = fundProvider.FindAcitveFundByKey(fundKey);
                     vs.Add(new Fund(fundKey, currentFund.PercentFromBanckroll, currentFund.MoneySourceType));
                     fundNumber++;
                 }
                 fundNumber = 1;
-                FundsGroups[groupCounter] = vs.ToArray();
+                AllFunds[groupCounter] = vs.ToArray();
             }
         }
 
         private void DeleteThisLater()
         {
-            DataProvider provider = new DataProvider();
-            FundDataProvider fundProvider = new FundDataProvider();
-            FundsGroupA = new Fund[fundProvider.GetFundGroupNumber('A')];
-            FundsGroupB = new Fund[fundProvider.GetFundGroupNumber('B')];
-            FundsGroupC = new Fund[fundProvider.GetFundGroupNumber('C')];
+            FundDataProvider provider = new FundDataProvider();
+            FundsGroupA = new Fund[provider.GetActiveFundGroupNumber('A')];
+            FundsGroupB = new Fund[provider.GetActiveFundGroupNumber('B')];
+            FundsGroupC = new Fund[provider.GetActiveFundGroupNumber('C')];
 
             int fundNumber = 1;
 
             for (int counterA = 0; counterA < FundsGroupA.Length; counterA++)
             {
                 string fundKey = "A" + Convert.ToString(fundNumber);
-                FundsGroupA[counterA] = new Fund(fundKey, provider.FindFundByKey(fundKey).PercentFromBanckroll);
+                FundsGroupA[counterA] = new Fund(fundKey, provider.FindAcitveFundByKey(fundKey).PercentFromBanckroll);
                 fundNumber++;
             }
 
@@ -101,7 +78,7 @@ namespace BusinessLogicLayer.BankrollDistribution
             for (int counterB = 0; counterB < FundsGroupB.Length; counterB++)
             {
                 string fundKey = "B" + Convert.ToString(fundNumber);
-                FundsGroupB[counterB] = new Fund(fundKey, provider.FindFundByKey(fundKey).PercentFromBanckroll);
+                FundsGroupB[counterB] = new Fund(fundKey, provider.FindAcitveFundByKey(fundKey).PercentFromBanckroll);
                 fundNumber++;
             }
 
@@ -109,7 +86,7 @@ namespace BusinessLogicLayer.BankrollDistribution
             for (int counterC = 0; counterC < FundsGroupC.Length; counterC++)
             {
                 string fundKey = "C" + Convert.ToString(fundNumber);
-                FundsGroupC[counterC] = new Fund(fundKey, provider.FindFundByKey(fundKey).PercentFromBanckroll);
+                FundsGroupC[counterC] = new Fund(fundKey, provider.FindAcitveFundByKey(fundKey).PercentFromBanckroll);
                 fundNumber++;
             }
         }

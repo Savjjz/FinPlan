@@ -21,7 +21,7 @@ namespace UILayer
             _provider = new DataProvider();
             _editor = new DataEditor();
             decimal[] percents = new decimal[15];
-            var funds  = _provider.GetFundsData();
+            var funds  = _provider.GetActiveFundsData();
             for (int counter = 0; counter <funds.Length; counter++)
             {
                 percents[counter] = funds[counter].PercentFromBanckroll;
